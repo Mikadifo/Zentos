@@ -6,8 +6,8 @@ function AppLayout() {
     <div className="min-h-screen flex">
       <Sidebar />
 
-      <div className="">
-        <main className="">
+      <div className="w-full">
+        <main>
           <Outlet />
         </main>
       </div>

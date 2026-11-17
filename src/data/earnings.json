@@ -1,0 +1,23 @@
+[
+  {
+    "id": "test1",
+    "type": "income",
+    "amount": 300.2,
+    "description": "Salario",
+    "date": "11-17-2026"
+  },
+  {
+    "id": "test2",
+    "type": "income",
+    "amount": 300.2,
+    "description": "Salario",
+    "date": "11-17-2026"
+  },
+  {
+    "id": "test3",
+    "type": "income",
+    "amount": 300.2,
+    "description": "Salario",
+    "date": "11-17-2026"
+  }
+]
