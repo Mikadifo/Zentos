@@ -6,7 +6,7 @@ export interface MonthlySummary {
   recentTransactions: Transaction[];
 }
 
-function parseTransactionDate(dateString: string): Date {
+export function parseTransactionDate(dateString: string): Date {
   const [month, day, year] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day);
 }

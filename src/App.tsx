@@ -12,8 +12,8 @@ function App() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/earnings" element={<Earnings />} />
-          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/earnings/:year" element={<Earnings />} />
+          <Route path="/expenses/:year" element={<Expenses />} />
         </Route>
 
         <Route path="/404" element={<NotFound />} />
