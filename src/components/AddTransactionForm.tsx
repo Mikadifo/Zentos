@@ -13,7 +13,7 @@ function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0.01);
 
-  const handleSubmit = (event: SubmitEvent) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const date = `01-${new Date(monthYear).getMonth().toString().padStart(2, "0")}-${new Date(monthYear).getFullYear()}`;
     console.log(date, type, amount, description);
