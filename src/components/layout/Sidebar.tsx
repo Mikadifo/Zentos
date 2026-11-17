@@ -22,7 +22,7 @@ function Sidebar() {
           </li>
           <li>
             <a
-              href="/"
+              href="/earnings"
               className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center"
             >
               <FaMoneyBill1Wave />
@@ -31,7 +31,7 @@ function Sidebar() {
           </li>
           <li>
             <a
-              href="/"
+              href="/expenses"
               className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center"
             >
               <GiPayMoney />
