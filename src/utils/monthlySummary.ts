@@ -7,7 +7,7 @@ export interface MonthlySummary {
 }
 
 export function parseTransactionDate(dateString: string): Date {
-  const [month, day, year] = dateString.split("-").map(Number);
+  const [day, month, year] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day);
 }
 
@@ -27,11 +27,7 @@ export function createMonthlySummary(
           date.getMonth() === monthIndex
         );
       })
-      .sort(
-        (a, b) =>
-          parseTransactionDate(b.date).getTime() -
-          parseTransactionDate(a.date).getTime(),
-      );
+      .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
 
     return {
       monthYear: new Date(year, monthIndex, 1).toLocaleDateString("en-US", {

@@ -2,16 +2,15 @@ import logo from "./../../assets/logo.svg";
 import { MdDashboard } from "react-icons/md";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { GiPayMoney } from "react-icons/gi";
-import earningsData from "./../../data/earnings.json";
-import expensesData from "./../../data/expenses.json";
 import { getAvailableYears } from "../../utils/transactionsYears";
-import type { Transaction } from "../../types/transaction";
 import { BiCalendar } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
+import { useTransactions } from "../../context/TransactionContext";
 
 function Sidebar() {
-  const earnings = earningsData as Transaction[];
-  const expenses = expensesData as Transaction[];
+  const { transactions } = useTransactions();
+  const earnings = transactions.filter(({ type }) => type === "income");
+  const expenses = transactions.filter(({ type }) => type === "income");
   const location = useLocation();
 
   return (

@@ -2,6 +2,9 @@ import { CgAddR } from "react-icons/cg";
 import type { TransactionType } from "../types/transaction";
 import { MdOutlineCancel } from "react-icons/md";
 import { useState, type FormEvent } from "react";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../lib/firebase";
+import { useTransactions } from "../context/TransactionContext";
 
 interface AddTransactionFormProps {
   monthYear: string;
@@ -9,14 +12,33 @@ interface AddTransactionFormProps {
 }
 
 function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
+  const { refreshTransactions } = useTransactions();
   const [isFormOpen, setFormOpen] = useState(false);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0.01);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const date = `01-${new Date(monthYear).getMonth().toString().padStart(2, "0")}-${new Date(monthYear).getFullYear()}`;
-    console.log(date, type, amount, description);
+
+    try {
+      const date = new Date(`${monthYear} 1`);
+
+      await addDoc(collection(db, "transactions"), {
+        type,
+        amount: Number(amount.toFixed(2)),
+        description,
+        date: `01-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getFullYear()}`,
+        createdAt: serverTimestamp(),
+      });
+
+      setDescription("");
+      setAmount(0.01);
+      setFormOpen(false);
+
+      refreshTransactions();
+    } catch (error) {
+      console.error("Error saving transaction", error);
+    }
   };
 
   return (
@@ -68,7 +90,7 @@ function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
             }}
           >
             <MdOutlineCancel />
-            Cancel
+            Close
           </button>
         </div>
       </form>
