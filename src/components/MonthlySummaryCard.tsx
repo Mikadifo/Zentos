@@ -1,5 +1,5 @@
 import type { Summary } from "../types/summary";
-import { CgAddR } from "react-icons/cg";
+import AddTransactionForm from "./AddTransactionForm";
 
 interface MonthlySummaryCardProps {
   summary: Summary;
@@ -7,10 +7,12 @@ interface MonthlySummaryCardProps {
 
 function MonthlySummaryCard({ summary }: MonthlySummaryCardProps) {
   return (
-    <div className="rounded-xl border-2 border-zento-gray p-6 w-100 h-109.5 flex flex-col gap-8">
+    <div className="rounded-xl border-2 border-zento-gray p-6 w-100 h-auto flex flex-col gap-8">
       <h3 className="font-bold text-2xl">{summary.monthYear}</h3>
       <div className="bg-zento-gray rounded-xl p-3 flex flex-col gap-2 text-end font-bold">
-        <span className="uppercase text-xs">Total Spent</span>
+        <span className="uppercase text-xs">
+          Total {summary.type === "income" ? "Earned" : "Spent"}
+        </span>
         <span className="text-3xl">$ {summary.total.toFixed(2)}</span>
       </div>
 
@@ -42,13 +44,7 @@ function MonthlySummaryCard({ summary }: MonthlySummaryCardProps) {
         </ul>
       </div>
 
-      <button
-        type="button"
-        className="flex items-center justify-center bg-zento-white rounded-xl text-zento-blue font-bold text-base gap-2 py-2 px-4 cursor-pointer"
-      >
-        <CgAddR />
-        Add Earning
-      </button>
+      <AddTransactionForm monthYear={summary.monthYear} type={summary.type} />
     </div>
   );
 }
