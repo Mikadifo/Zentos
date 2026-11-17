@@ -5,7 +5,7 @@ import { GiPayMoney } from "react-icons/gi";
 
 function Sidebar() {
   return (
-    <aside className="bg-zento-white w-58 p-8 flex flex-col gap-8">
+    <aside className="bg-zento-white w-58 p-8 flex flex-col gap-8 fixed left-0 h-full">
       <img src={logo} alt="Logo" />
       <div className="h-px w-full bg-zento-blue rounded-full opacity-25" />
 
