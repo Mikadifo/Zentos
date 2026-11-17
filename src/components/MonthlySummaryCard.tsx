@@ -7,11 +7,11 @@ interface MonthlySummaryCardProps {
 
 function MonthlySummaryCard({ summary }: MonthlySummaryCardProps) {
   return (
-    <div className="rounded-xl border-2 border-zento-gray p-6 w-96.5 h-109.5 flex flex-col gap-8">
+    <div className="rounded-xl border-2 border-zento-gray p-6 w-100 h-109.5 flex flex-col gap-8">
       <h3 className="font-bold text-2xl">{summary.monthYear}</h3>
       <div className="bg-zento-gray rounded-xl p-3 flex flex-col gap-2 text-end font-bold">
         <span className="uppercase text-xs">Total Spent</span>
-        <span className="text-3xl">$ {summary.total}</span>
+        <span className="text-3xl">$ {summary.total.toFixed(2)}</span>
       </div>
 
       <div>
@@ -31,8 +31,11 @@ function MonthlySummaryCard({ summary }: MonthlySummaryCardProps) {
               className="flex justify-between items-center"
             >
               <span>{transaction.description}</span>
-              <span className="text-zento-green font-bold">
-                +$ {transaction.amount}
+              <span
+                className={`${transaction.type === "income" ? "text-zento-green" : "text-zento-red"} font-bold`}
+              >
+                {transaction.type === "income" ? "+" : "-"}${" "}
+                {transaction.amount}
               </span>
             </li>
           ))}
