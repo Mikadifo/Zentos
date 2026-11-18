@@ -5,23 +5,36 @@ import Expenses from "./pages/Expenses";
 import NotFound from "./pages/NotFound";
 import AppLayout from "./components/layout/AppLayout";
 import { TransactionProvider } from "./context/TransactionContext";
+import Login from "./pages/Login";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
   return (
-    <TransactionProvider>
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/earnings/:year" element={<Earnings />} />
-            <Route path="/expenses/:year" element={<Expenses />} />
+          <Route path="/login" element={<Login />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route
+              element={
+                <TransactionProvider>
+                  <AppLayout />
+                </TransactionProvider>
+              }
+            >
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/earnings/:year" element={<Earnings />} />
+              <Route path="/expenses/:year" element={<Expenses />} />
+            </Route>
           </Route>
 
           <Route path="/404" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </BrowserRouter>
-    </TransactionProvider>
+    </AuthProvider>
   );
 }
 
