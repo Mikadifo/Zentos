@@ -7,7 +7,11 @@ function Earnings() {
   const { year } = useParams();
   const { transactions } = useTransactions();
 
-  const monthlySummary = createMonthlySummary(transactions, "income", +year);
+  const monthlySummary = createMonthlySummary(
+    transactions,
+    "income",
+    Number(year),
+  );
 
   return (
     <div className="p-8 text-zento-white">

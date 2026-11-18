@@ -1,48 +1,17 @@
 import { useParams } from "react-router-dom";
 import SummaryList from "../components/SummaryList";
-import type { Transaction } from "../types/transaction";
 import { createMonthlySummary } from "../utils/monthlySummary";
-import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { useTransactions } from "../context/TransactionContext";
 
 function Expenses() {
   const { year } = useParams();
-  const [expenses, setEarnings] = useState<Transaction[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { transactions } = useTransactions();
 
-  useEffect(() => {
-    async function fetchEarnings() {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const transactionsQuery = query(
-          collection(db, "transactions"),
-          where("type", "==", "expense"),
-        );
-
-        const snapshot = await getDocs(transactionsQuery);
-
-        const data = snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        })) as Transaction[];
-
-        setEarnings(data);
-      } catch (err) {
-        console.error("Error fetching expenses: ", err);
-        setError("Unable to load expenses");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchEarnings();
-  }, []);
-
-  const monthlySummary = createMonthlySummary(expenses, "expense", +year);
+  const monthlySummary = createMonthlySummary(
+    transactions,
+    "expense",
+    Number(year),
+  );
 
   return (
     <div className="p-8 text-zento-white">
