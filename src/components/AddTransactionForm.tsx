@@ -5,6 +5,8 @@ import { useState, type FormEvent } from "react";
 import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useTransactions } from "../context/TransactionContext";
+import { useCategories } from "../context/CategoryContext";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 interface AddTransactionFormProps {
   monthYear: string;
@@ -13,17 +15,17 @@ interface AddTransactionFormProps {
 
 function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
   const { refreshTransactions } = useTransactions();
+  const { categories } = useCategories();
   const [isFormOpen, setFormOpen] = useState(false);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0.01);
+  const [categoryId, setCategoryId] = useState("");
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
       const date = new Date(`${monthYear} 1`);
-      //TODO: finish this
-      const categoryId = "";
 
       await addDoc(collection(db, "transactions"), {
         type,
@@ -37,6 +39,7 @@ function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
       setDescription("");
       setAmount(0.01);
       setFormOpen(false);
+      setCategoryId("");
 
       refreshTransactions();
     } catch (error) {
@@ -74,6 +77,30 @@ function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
           placeholder="0.00"
           className="border border-zento-white rounded-xl w-full py-2 px-4"
         />
+        <div className="relative">
+          <select
+            id="category"
+            name="category"
+            required
+            onChange={({ target }) => setCategoryId(target.value)}
+            className="appearance-none border border-zento-white rounded-xl w-full py-2 px-4 pr-10 text-zento-white"
+          >
+            <option value="" disabled selected={true} className="bg-zento-blue">
+              Select a category
+            </option>
+
+            {categories.map((category) => (
+              <option
+                key={category.id}
+                value={category.id}
+                className="bg-zento-blue"
+              >
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <BiSolidDownArrow className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zento-white" />
+        </div>
 
         <div className="flex gap-2 font-bold">
           <button
