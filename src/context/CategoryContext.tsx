@@ -54,7 +54,7 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
   };
 
   const deleteCategory = async (id: string) => {
-    await deleteDoc(doc(db, "category", id));
+    await deleteDoc(doc(db, "categories", id));
     await refreshCategories();
   };
 
