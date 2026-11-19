@@ -10,7 +10,11 @@ function MonthlyBalanceCard({ summary }: MonthlyBalanceCardProps) {
       <h3 className="font-bold text-2xl">{summary.monthYear}</h3>
       <div className="bg-zento-gray rounded-xl p-3 flex flex-col gap-2 text-end font-bold">
         <span className="uppercase text-xs">Estimated Balance</span>
-        <span className="text-3xl">$ {summary.total.toFixed(2)}</span>
+        <span
+          className={`text-3xl ${Number(summary.total.toFixed(2)) < 0 ? "text-zento-red" : "text-zento-white"}`}
+        >
+          $ {summary.total.toFixed(2)}
+        </span>
       </div>
 
       <div>

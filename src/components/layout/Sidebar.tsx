@@ -37,7 +37,7 @@ function Sidebar() {
             <li>
               <a
                 href="/dash"
-                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname.includes("/dash") ? "bg-zento-blue" : "bg-zento-blue-64"}`}
+                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname.includes("/dash") ? "bg-zento-blue" : "bg-zento-blue-64"} hover:opacity-80`}
               >
                 <MdDashboard />
                 Dashboard
@@ -50,7 +50,7 @@ function Sidebar() {
                 <li className="self-end">
                   <a
                     href={`/dash/balances/${new Date().getFullYear()}`}
-                    className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center w-fit ${location.pathname.includes("balances") ? "bg-zento-blue" : "bg-zento-blue-64 "}`}
+                    className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center w-fit ${location.pathname.includes("balances") ? "bg-zento-blue" : "bg-zento-blue-64 "} hover:opacity-80`}
                   >
                     <FaBalanceScale />
                     Balances
@@ -63,7 +63,7 @@ function Sidebar() {
                       <li key={year} className="self-end">
                         <a
                           href={`/dash/balances/${year}`}
-                          className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit"
+                          className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80"
                         >
                           <BiCalendar />
                           {year}
@@ -77,7 +77,7 @@ function Sidebar() {
             <li>
               <a
                 href={`/earnings/${new Date().getFullYear()}`}
-                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname.includes("earnings") ? "bg-zento-blue" : "bg-zento-blue-64"}`}
+                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname.includes("earnings") ? "bg-zento-blue" : "bg-zento-blue-64"} hover:opacity-80`}
               >
                 <FaMoneyBill1Wave />
                 Earnings
@@ -90,7 +90,7 @@ function Sidebar() {
                   <li key={year} className="self-end">
                     <a
                       href={`/earnings/${year}`}
-                      className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit"
+                      className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80"
                     >
                       <BiCalendar />
                       {year}
@@ -102,7 +102,7 @@ function Sidebar() {
             <li>
               <a
                 href={`/expenses/${new Date().getFullYear()}`}
-                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname.includes("expenses") ? "bg-zento-blue" : "bg-zento-blue-64"}`}
+                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname.includes("expenses") ? "bg-zento-blue" : "bg-zento-blue-64"} hover:opacity-80`}
               >
                 <GiPayMoney />
                 Expenses
@@ -116,7 +116,7 @@ function Sidebar() {
                   <li key={year} className="self-end">
                     <a
                       href={`/expenses/${year}`}
-                      className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit"
+                      className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80"
                     >
                       <BiCalendar />
                       {year}
@@ -131,7 +131,7 @@ function Sidebar() {
 
       <button
         type="button"
-        className="rounded-xl border border-zento-blue flex gap-2.5 justify-center items-center text-zento-blue cursor-pointer py-2 px-4 font-bold"
+        className="rounded-xl border border-zento-blue flex gap-2.5 justify-center items-center text-zento-blue cursor-pointer py-2 px-4 font-bold hover:opacity-80"
         onClick={handleLogout}
       >
         <BiLogOut />
