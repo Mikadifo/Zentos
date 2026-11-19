@@ -15,7 +15,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { PiFileDocBold } from "react-icons/pi";
 
 interface TransactionContextType {
   transactions: Transaction[];
