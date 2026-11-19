@@ -125,6 +125,16 @@ function Sidebar() {
                 ))}
               </ul>
             </li>
+
+            <li>
+              <a
+                href="/categories"
+                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname.includes("categories") ? "bg-zento-blue" : "bg-zento-blue-64"} hover:opacity-80`}
+              >
+                <FaMoneyBill1Wave />
+                Categories
+              </a>
+            </li>
           </ul>
         </nav>
       </div>

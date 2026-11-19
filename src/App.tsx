@@ -9,6 +9,8 @@ import Login from "./pages/Login";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Balances from "./pages/Balances";
+import Categories from "./pages/Categories";
+import { CategoryProvider } from "./context/CategoryContext";
 
 function App() {
   return (
@@ -20,15 +22,19 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route
               element={
-                <TransactionProvider>
-                  <AppLayout />
-                </TransactionProvider>
+                <CategoryProvider>
+                  <TransactionProvider>
+                    <AppLayout />
+                  </TransactionProvider>
+                </CategoryProvider>
               }
             >
+              <Route path="/" element={<Navigate to={"/dash"} replace />} />
               <Route path="/dash" element={<Dashboard />} />
               <Route path="/dash/balances/:year" element={<Balances />} />
               <Route path="/earnings/:year" element={<Earnings />} />
               <Route path="/expenses/:year" element={<Expenses />} />
+              <Route path="/categories" element={<Categories />} />
             </Route>
           </Route>
 

@@ -1,3 +1,4 @@
+import { useCategories } from "../context/CategoryContext";
 import type { Summary } from "../types/summary";
 import AddTransactionForm from "./AddTransactionForm";
 
@@ -6,6 +7,8 @@ interface MonthlySummaryCardProps {
 }
 
 function MonthlySummaryCard({ summary }: MonthlySummaryCardProps) {
+  const { categories } = useCategories();
+
   return (
     <div className="rounded-xl border-2 border-zento-gray p-6 w-100 h-auto flex flex-col gap-8">
       <h3 className="font-bold text-2xl">{summary.monthYear}</h3>
@@ -26,13 +29,22 @@ function MonthlySummaryCard({ summary }: MonthlySummaryCardProps) {
           </a>
         </div>
 
-        <ul className="flex flex-col gap-3 text-base">
+        <ul className="flex flex-col gap-4 text-base">
           {summary.recentTransactions.map((transaction) => (
             <li
               key={transaction.id}
               className="flex justify-between items-center"
             >
-              <span>{transaction.description}</span>
+              <div className="flex flex-col gap-2">
+                <span>{transaction.description}</span>
+                <span className="text-xs bg-zento-gray w-fit font-bold py-1 px-2 rounded-lg">
+                  {
+                    categories.find(
+                      (category) => category.id === transaction.category.id,
+                    ).name
+                  }
+                </span>
+              </div>
               <span
                 className={`${transaction.type === "income" ? "text-zento-green" : "text-zento-red"} font-bold`}
               >

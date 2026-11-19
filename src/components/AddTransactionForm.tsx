@@ -2,7 +2,7 @@ import { CgAddR } from "react-icons/cg";
 import type { TransactionType } from "../types/transaction";
 import { MdOutlineCancel } from "react-icons/md";
 import { useState, type FormEvent } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useTransactions } from "../context/TransactionContext";
 
@@ -22,12 +22,15 @@ function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
 
     try {
       const date = new Date(`${monthYear} 1`);
+      //TODO: finish this
+      const categoryId = "";
 
       await addDoc(collection(db, "transactions"), {
         type,
         amount: Number(amount.toFixed(2)),
         description,
         date: `01-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getFullYear()}`,
+        category: doc(db, "categories", categoryId),
         createdAt: serverTimestamp(),
       });
 
