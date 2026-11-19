@@ -1,3 +1,4 @@
+import type { Category } from "../types/category";
 import type { Transaction, TransactionType } from "../types/transaction";
 
 export interface MonthlySummary {
@@ -74,4 +75,42 @@ export function createMonthlyBalanceSummary(
       recentTransactions: monthlyTransactions.slice(0, 3),
     };
   });
+}
+
+export function createMonthlySummaryByCategory(
+  transactions: Transaction[],
+  categories: Category[],
+  type: TransactionType,
+  year: number,
+  month: number,
+) {
+  const monthlyTransactions = transactions.filter((transaction) => {
+    const date = parseTransactionDate(transaction.date);
+
+    return (
+      date.getFullYear() === year &&
+      date.getMonth() + 1 === month &&
+      transaction.type === type
+    );
+  });
+
+  return categories
+    .map((category) => {
+      const categoryTransactions = monthlyTransactions.filter(
+        (transaction) => transaction.category.id === category.id,
+      );
+
+      return {
+        categoryId: category.id,
+        categoryName: category.name,
+        type,
+        total: categoryTransactions.reduce(
+          (sum, transaction) => sum + transaction.amount,
+          0,
+        ),
+        transactions: categoryTransactions,
+      };
+    })
+    .filter((category) => category.transactions.length > 0)
+    .sort((a, b) => b.total - a.total);
 }

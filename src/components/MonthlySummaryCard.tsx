@@ -24,7 +24,10 @@ function MonthlySummaryCard({ summary }: MonthlySummaryCardProps) {
           <span className="text-lg">
             Recent {summary.type === "income" ? "Earnings" : "Expenses"}
           </span>
-          <a href="#" className="text-zento-gray text-sm">
+          <a
+            href={`${summary.monthYear.split(" ")[1]}/${new Date(summary.monthYear).getMonth() + 1}`}
+            className="text-zento-gray text-sm"
+          >
             View all
           </a>
         </div>

@@ -6,3 +6,11 @@ export interface Summary {
   total: number;
   recentTransactions: Transaction[];
 }
+
+export interface CategorySummary {
+  categoryId: string;
+  type: TransactionType;
+  categoryName: string;
+  total: number;
+  transactions: Transaction[];
+}

@@ -11,6 +11,8 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Balances from "./pages/Balances";
 import Categories from "./pages/Categories";
 import { CategoryProvider } from "./context/CategoryContext";
+import EarningsDescription from "./pages/EarningsDescription";
+import ExpensesDescription from "./pages/ExpensesDescription";
 
 function App() {
   return (
@@ -32,6 +34,14 @@ function App() {
               <Route path="/" element={<Navigate to={"/dash"} replace />} />
               <Route path="/dash" element={<Dashboard />} />
               <Route path="/dash/balances/:year" element={<Balances />} />
+              <Route
+                path="/earnings/:year/:month"
+                element={<EarningsDescription />}
+              />
+              <Route
+                path="/expenses/:year/:month"
+                element={<ExpensesDescription />}
+              />
               <Route path="/earnings/:year" element={<Earnings />} />
               <Route path="/expenses/:year" element={<Expenses />} />
               <Route path="/categories" element={<Categories />} />

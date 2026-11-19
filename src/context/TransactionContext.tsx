@@ -7,12 +7,24 @@ import {
   type ReactNode,
 } from "react";
 import type { Transaction } from "../types/transaction";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { PiFileDocBold } from "react-icons/pi";
 
 interface TransactionContextType {
   transactions: Transaction[];
   refreshTransactions: () => Promise<void>;
+  updateTransaction: (
+    id: string,
+    updates: Partial<Omit<Transaction, "id" | "createdAt">>,
+  ) => Promise<void>;
+  deleteTransaction: (id: string) => Promise<void>;
 }
 
 const TransactionContext = createContext<TransactionContextType | null>(null);
@@ -31,12 +43,32 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
     setTransactions(data);
   }, []);
 
+  const updateTransaction = async (
+    id: string,
+    updates: Partial<Omit<Transaction, "id" | "createdAt">>,
+  ) => {
+    await updateDoc(doc(db, "transactions", id), updates);
+    await refreshTransactions();
+  };
+
+  const deleteTransaction = async (id: string) => {
+    await deleteDoc(doc(db, "transactions", id));
+    await refreshTransactions();
+  };
+
   useEffect(() => {
     refreshTransactions().catch(console.error);
   }, [refreshTransactions]);
 
   return (
-    <TransactionContext.Provider value={{ transactions, refreshTransactions }}>
+    <TransactionContext.Provider
+      value={{
+        transactions,
+        refreshTransactions,
+        updateTransaction,
+        deleteTransaction,
+      }}
+    >
       {children}
     </TransactionContext.Provider>
   );
