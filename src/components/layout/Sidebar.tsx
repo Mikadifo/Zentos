@@ -3,10 +3,8 @@ import icon from "./../../assets/icon.svg";
 import { MdDashboard } from "react-icons/md";
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 import { GiPayMoney } from "react-icons/gi";
-import { getAvailableYears } from "../../utils/transactionsYears";
 import { BiCalendar, BiLogOut } from "react-icons/bi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useTransactions } from "../../context/TransactionContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { FaBalanceScale } from "react-icons/fa";
@@ -14,7 +12,12 @@ import {
   TbLayoutSidebarLeftCollapseFilled,
   TbLayoutSidebarRightCollapseFilled,
 } from "react-icons/tb";
-import { type Dispatch, type SetStateAction } from "react";
+import {
+  useState,
+  type Dispatch,
+  type KeyboardEvent,
+  type SetStateAction,
+} from "react";
 import { GrList } from "react-icons/gr";
 
 interface SidebarProps {
@@ -23,10 +26,8 @@ interface SidebarProps {
 }
 
 function Sidebar({ isSidebarOpen, setSidebarOpen }: SidebarProps) {
-  const { transactions } = useTransactions();
+  const [year, setYear] = useState(new Date().getFullYear());
 
-  const earnings = transactions.filter(({ type }) => type === "income");
-  const expenses = transactions.filter(({ type }) => type === "expense");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -36,6 +37,15 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }: SidebarProps) {
       navigate("/login", { replace: true });
     } catch (error) {
       console.error("Error signing out:", error);
+    }
+  };
+
+  const handleYearSubmit = (
+    event: KeyboardEvent<HTMLInputElement>,
+    baseURL: string,
+  ) => {
+    if (event.key === "Enter") {
+      navigate(`${baseURL}/${year}`);
     }
   };
 
@@ -70,23 +80,18 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }: SidebarProps) {
                     <FaBalanceScale />
                     {isSidebarOpen && "Balances"}
                   </a>
-                  {isSidebarOpen && (
-                    <ul
-                      className="flex flex-col gap-2 text-sm mt-4"
-                      hidden={!location.pathname.includes("balances")}
-                    >
-                      {getAvailableYears(earnings).map((year) => (
-                        <li key={year} className="self-end">
-                          <a
-                            href={`/dash/balances/${year}`}
-                            className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80"
-                          >
-                            <BiCalendar />
-                            {year}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+
+                  {isSidebarOpen && location.pathname.includes("balances") && (
+                    <div className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80 ml-auto mt-4">
+                      <BiCalendar />
+                      <input
+                        type="number"
+                        className="w-10 outline-none [&::-webkit-inner-spin-button]:appearance-none"
+                        value={year}
+                        onChange={({ target }) => setYear(Number(target.value))}
+                        onKeyDown={(evt) => handleYearSubmit(evt, "/balances")}
+                      />
+                    </div>
                   )}
                 </li>
               </ul>
@@ -99,23 +104,17 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }: SidebarProps) {
                 <FaMoneyBill1Wave />
                 {isSidebarOpen && "Earnings"}
               </a>
-              {isSidebarOpen && (
-                <ul
-                  className="flex flex-col gap-2 text-sm mt-4"
-                  hidden={!location.pathname.includes("earnings")}
-                >
-                  {getAvailableYears(earnings, "income").map((year) => (
-                    <li key={year} className="self-end">
-                      <a
-                        href={`/earnings/${year}`}
-                        className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80"
-                      >
-                        <BiCalendar />
-                        {year}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              {isSidebarOpen && location.pathname.includes("earnings") && (
+                <div className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80 ml-auto mt-4">
+                  <BiCalendar />
+                  <input
+                    type="number"
+                    className="w-10 outline-none [&::-webkit-inner-spin-button]:appearance-none"
+                    value={year}
+                    onChange={({ target }) => setYear(Number(target.value))}
+                    onKeyDown={(evt) => handleYearSubmit(evt, "/earnings")}
+                  />
+                </div>
               )}
             </li>
             <li>
@@ -127,23 +126,17 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }: SidebarProps) {
                 {isSidebarOpen && "Expenses"}
               </a>
 
-              {isSidebarOpen && (
-                <ul
-                  className="flex flex-col gap-2 text-sm mt-4"
-                  hidden={!location.pathname.includes("expenses")}
-                >
-                  {getAvailableYears(expenses, "expense").map((year) => (
-                    <li key={year} className="self-end">
-                      <a
-                        href={`/expenses/${year}`}
-                        className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80"
-                      >
-                        <BiCalendar />
-                        {year}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              {isSidebarOpen && location.pathname.includes("expenses") && (
+                <div className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit hover:opacity-80 ml-auto mt-4">
+                  <BiCalendar />
+                  <input
+                    type="number"
+                    className="w-10 outline-none [&::-webkit-inner-spin-button]:appearance-none"
+                    value={year}
+                    onChange={({ target }) => setYear(Number(target.value))}
+                    onKeyDown={(evt) => handleYearSubmit(evt, "/balances")}
+                  />
+                </div>
               )}
             </li>
 
