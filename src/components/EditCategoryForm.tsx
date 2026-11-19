@@ -26,6 +26,7 @@ function EditCategoryForm({ category }: EditCategoryFormProps) {
         name: trimmedName,
       });
       setFormOpen(false);
+      setNewName("");
     } catch (error) {
       console.error("Error updating category:", error);
       setError("Unable to update category");
