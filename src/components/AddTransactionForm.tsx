@@ -101,7 +101,7 @@ function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
         onClick={() => setFormOpen(true)}
       >
         <CgAddR />
-        Add Earning
+        Add {type === "income" ? "Earnings" : "Expenses"}
       </button>
     </>
   );

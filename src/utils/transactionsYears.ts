@@ -3,12 +3,16 @@ import { parseTransactionDate } from "./monthlySummary";
 
 export function getAvailableYears(
   transactions: Transaction[],
-  type: TransactionType,
+  type?: TransactionType,
 ) {
   return [
     ...new Set(
       transactions
-        .filter((transaction) => transaction.type === type)
+        .filter((transaction) =>
+          type
+            ? transaction.type === type
+            : transaction.type === transaction.type,
+        )
         .map(({ date }) => parseTransactionDate(date).getFullYear()),
     ),
   ].sort((a, b) => b - a);

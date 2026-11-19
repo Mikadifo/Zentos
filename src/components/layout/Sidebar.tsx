@@ -8,11 +8,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useTransactions } from "../../context/TransactionContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../lib/firebase";
+import { FaBalanceScale } from "react-icons/fa";
 
 function Sidebar() {
   const { transactions } = useTransactions();
   const earnings = transactions.filter(({ type }) => type === "income");
-  const expenses = transactions.filter(({ type }) => type === "income");
+  const expenses = transactions.filter(({ type }) => type === "expense");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -35,12 +36,43 @@ function Sidebar() {
           <ul className="flex flex-col gap-4">
             <li>
               <a
-                href="/"
-                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname === "/" ? "bg-zento-blue" : "bg-zento-blue-64"}`}
+                href="/dash"
+                className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center ${location.pathname.includes("/dash") ? "bg-zento-blue" : "bg-zento-blue-64"}`}
               >
                 <MdDashboard />
                 Dashboard
               </a>
+
+              <ul
+                className="flex flex-col gap-2 text-sm mt-4"
+                hidden={!location.pathname.includes("/dash")}
+              >
+                <li className="self-end">
+                  <a
+                    href={`/dash/balances/${new Date().getFullYear()}`}
+                    className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit"
+                  >
+                    <FaBalanceScale />
+                    Balances
+                  </a>
+                  <ul
+                    className="flex flex-col gap-2 text-sm mt-4"
+                    hidden={!location.pathname.includes("balances")}
+                  >
+                    {getAvailableYears(earnings).map((year) => (
+                      <li key={year} className="self-end">
+                        <a
+                          href={`/dash/balances/${year}`}
+                          className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit"
+                        >
+                          <BiCalendar />
+                          {year}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              </ul>
             </li>
             <li>
               <a

@@ -22,7 +22,7 @@ function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/", { replace: true });
+      navigate("/dash", { replace: true });
     } catch {
       setError("Invalid email or password");
     } finally {

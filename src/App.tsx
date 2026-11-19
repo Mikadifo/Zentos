@@ -8,6 +8,7 @@ import { TransactionProvider } from "./context/TransactionContext";
 import Login from "./pages/Login";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Balances from "./pages/Balances";
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
                 </TransactionProvider>
               }
             >
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/dash" element={<Dashboard />} />
+              <Route path="/dash/balances/:year" element={<Balances />} />
               <Route path="/earnings/:year" element={<Earnings />} />
               <Route path="/expenses/:year" element={<Expenses />} />
             </Route>
