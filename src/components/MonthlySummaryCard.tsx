@@ -41,7 +41,7 @@ function MonthlySummaryCard({ summary }: MonthlySummaryCardProps) {
                   {
                     categories.find(
                       (category) => category.id === transaction.category.id,
-                    ).name
+                    )!.name
                   }
                 </span>
               </div>

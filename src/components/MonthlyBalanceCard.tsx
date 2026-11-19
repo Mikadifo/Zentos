@@ -40,7 +40,7 @@ function MonthlyBalanceCard({ summary }: MonthlyBalanceCardProps) {
                   {
                     categories.find(
                       (category) => category.id === transaction.category.id,
-                    ).name
+                    )!.name
                   }
                 </span>
               </div>
