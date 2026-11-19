@@ -50,7 +50,7 @@ function Sidebar() {
                 <li className="self-end">
                   <a
                     href={`/dash/balances/${new Date().getFullYear()}`}
-                    className="rounded-xl bg-zento-blue py-2 px-4 font-bold flex gap-2.5 items-center w-fit"
+                    className={`rounded-xl py-2 px-4 font-bold flex gap-2.5 items-center w-fit ${location.pathname.includes("balances") ? "bg-zento-blue" : "bg-zento-blue-64 "}`}
                   >
                     <FaBalanceScale />
                     Balances

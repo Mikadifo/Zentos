@@ -43,3 +43,35 @@ export function createMonthlySummary(
     };
   });
 }
+
+export function createMonthlyBalanceSummary(
+  transactions: Transaction[],
+  year = new Date().getFullYear(),
+) {
+  return Array.from({ length: 12 }, (_, monthIndex) => {
+    const monthlyTransactions = transactions
+      .filter((transaction) => {
+        const date = parseTransactionDate(transaction.date);
+
+        return date.getFullYear() === year && date.getMonth() === monthIndex;
+      })
+      .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis());
+
+    const total = monthlyTransactions.reduce(
+      (balance, transaction) =>
+        transaction.type === "income"
+          ? balance + transaction.amount
+          : balance - transaction.amount,
+      0,
+    );
+
+    return {
+      monthYear: new Date(year, monthIndex, 1).toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+      }),
+      total,
+      recentTransactions: monthlyTransactions.slice(0, 3),
+    };
+  });
+}
