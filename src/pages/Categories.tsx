@@ -1,6 +1,9 @@
 import CategoriesList from "../components/CategoriesList";
+import { useCategories } from "../context/CategoryContext";
 
 function Categories() {
+  const { categories } = useCategories();
+
   return (
     <div className="p-8 text-zento-white">
       <h1 className="text-3xl font-bold text-center">Categories</h1>
@@ -8,7 +11,7 @@ function Categories() {
         Manage transaction categories
       </h2>
 
-      <CategoriesList categories={[]} />
+      <CategoriesList categories={categories} />
     </div>
   );
 }

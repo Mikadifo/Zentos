@@ -100,6 +100,7 @@ function AddTransactionForm({ monthYear, type }: AddTransactionFormProps) {
 
       <button
         type="button"
+        hidden={isFormOpen}
         className="flex items-center justify-center bg-zento-white rounded-xl text-zento-blue font-bold text-base gap-2 py-2 px-4 cursor-pointer"
         onClick={() => setFormOpen(true)}
       >

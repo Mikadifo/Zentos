@@ -22,7 +22,7 @@ interface CategoryContextType {
   loading: boolean;
   refreshCategories: () => Promise<void>;
   addCategory: (category: Omit<Category, "id">) => Promise<void>;
-  udpateCategory: (id: string, category: Omit<Category, "id">) => Promise<void>;
+  updateCategory: (id: string, category: Omit<Category, "id">) => Promise<void>;
   deleteCategory: (id: string) => Promise<void>;
 }
 
@@ -48,7 +48,7 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
     await refreshCategories();
   };
 
-  const udpateCategory = async (id: string, category: Omit<Category, "id">) => {
+  const updateCategory = async (id: string, category: Omit<Category, "id">) => {
     await updateDoc(doc(db, "categories", id), category);
     await refreshCategories();
   };
@@ -71,7 +71,7 @@ export function CategoryProvider({ children }: { children: ReactNode }) {
         loading,
         refreshCategories,
         addCategory,
-        udpateCategory,
+        updateCategory,
         deleteCategory,
       }}
     >
