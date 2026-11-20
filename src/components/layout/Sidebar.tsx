@@ -168,7 +168,7 @@ function Sidebar({ isSidebarOpen, setSidebarOpen }: SidebarProps) {
         <button
           className="flex gap-2 items-center justify-center cursor-pointer hover:opacity-80"
           onClick={() => {
-            localStorage.setItem("sidebarOpen", JSON.stringify(!isSidebarOpen));
+            localStorage.setItem("sidebarOpen", String(!isSidebarOpen));
             setSidebarOpen((prev) => !prev);
           }}
         >

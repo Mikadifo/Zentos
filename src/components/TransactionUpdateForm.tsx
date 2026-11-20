@@ -142,7 +142,7 @@ function TransactionUpdateForm({
               <option
                 key={category.id}
                 value={category.id}
-                defaultValue={category.id === categoryId ? categoryId : null}
+                selected={category.id === categoryId}
                 className="bg-zento-blue"
               >
                 {category.name}

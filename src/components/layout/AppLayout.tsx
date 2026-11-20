@@ -4,9 +4,7 @@ import { useState } from "react";
 
 function AppLayout() {
   const [isSidebarOpen, setSidebarOpen] = useState<boolean>(
-    localStorage.getItem("sidebarOpen")
-      ? JSON.parse(localStorage.getItem("sidebarOpen"))
-      : false,
+    () => localStorage.getItem("sidebarOpen") === "true",
   );
 
   return (
